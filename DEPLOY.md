@@ -1,270 +1,174 @@
-# 🚀 Guia de Deploy - D&D 5e Character Creator
+# 🚀 Guia de Deploy para GitHub Pages
 
-Este guia explica como fazer o deploy da aplicação no Streamlit Cloud.
+Este guia explica como fazer o deploy da aplicação D&D Character Creator para o GitHub Pages.
 
 ## 📋 Pré-requisitos
 
 - Conta no GitHub
-- Conta no Streamlit Cloud
-- Repositório GitHub com o código da aplicação
+- Git instalado localmente
+- Node.js 18+ instalado
 
-## 🔧 Configuração do Repositório
+## 🔧 Configuração Inicial
 
-### 1. Estrutura do Projeto
-```
-dnd-character-creator/
-├── app.py                 # Aplicação principal
-├── streamlit_app.py       # Arquivo para Streamlit Cloud
-├── requirements.txt       # Dependências Python
-├── README.md             # Documentação
-├── DEPLOY.md             # Este arquivo
-├── .streamlit/           # Configurações do Streamlit
-│   ├── config.toml
-│   └── secrets.toml
-├── backend/              # Código do backend
-│   ├── __init__.py
-│   ├── character.py
-│   ├── race.py
-│   ├── class_.py
-│   ├── background.py
-│   ├── item.py
-│   ├── ability.py
-│   ├── data_manager.py
-│   ├── character_manager.py
-│   ├── pdf_exporter.py
-│   ├── translations.py
-│   ├── user_manager.py
-│   └── data/
-│       ├── races.json
-│       ├── classes.json
-│       └── backgrounds.json
-└── frontend/             # Código do frontend
-    ├── __init__.py
-    ├── character_creator.py
-    ├── character_sheet.py
-    └── utils.py
+### 1. Fork do Repositório
+
+1. Acesse [https://github.com/seu-usuario/dnd-character-creator](https://github.com/seu-usuario/dnd-character-creator)
+2. Clique em "Fork" no canto superior direito
+3. Clone seu fork localmente:
+
+```bash
+git clone https://github.com/SEU-USUARIO/dnd-character-creator.git
+cd dnd-character-creator
 ```
 
-### 2. Arquivos de Configuração
+### 2. Configuração do GitHub Pages
 
-#### requirements.txt
-```
-streamlit>=1.28.0
-pandas>=2.0.0
-numpy>=1.24.0
-reportlab>=4.0.0
-Pillow>=10.0.0
-```
+1. Acesse as configurações do seu repositório no GitHub
+2. Vá para "Pages" no menu lateral
+3. Em "Source", selecione "GitHub Actions"
+4. Salve as configurações
 
-#### .streamlit/config.toml
-```toml
-[theme]
-primaryColor = "#FF6B6B"
-backgroundColor = "#FFFFFF"
-secondaryBackgroundColor = "#F0F2F6"
-textColor = "#262730"
-font = "sans serif"
+## 🚀 Deploy Automático
 
-[server]
-headless = true
-port = 8501
-enableCORS = false
-enableXsrfProtection = false
+O deploy automático está configurado via GitHub Actions. Toda vez que você fizer push para a branch `main`, a aplicação será automaticamente construída e publicada.
 
-[browser]
-gatherUsageStats = false
-```
+### Workflow de Deploy
 
-## 🌐 Deploy no Streamlit Cloud
+O arquivo `.github/workflows/deploy.yml` contém a configuração do deploy automático:
 
-### 1. Preparação do Repositório
+```yaml
+name: Deploy to GitHub Pages
 
-1. **Crie um repositório no GitHub:**
-   ```bash
-   git init
-   git add .
-   git commit -m "Initial commit: D&D 5e Character Creator"
-   git branch -M main
-   git remote add origin https://github.com/SEU_USUARIO/dnd-character-creator.git
-   git push -u origin main
-   ```
+on:
+  push:
+    branches: [ main ]
 
-2. **Verifique se todos os arquivos estão incluídos:**
-   - ✅ `streamlit_app.py` (arquivo principal)
-   - ✅ `requirements.txt`
-   - ✅ `.streamlit/config.toml`
-   - ✅ Todos os arquivos do backend e frontend
-
-### 2. Deploy no Streamlit Cloud
-
-1. **Acesse o Streamlit Cloud:**
-   - Vá para [share.streamlit.io](https://share.streamlit.io)
-   - Faça login com sua conta GitHub
-
-2. **Crie uma nova aplicação:**
-   - Clique em "New app"
-   - Selecione seu repositório: `SEU_USUARIO/dnd-character-creator`
-   - Branch: `main`
-   - Main file path: `streamlit_app.py`
-
-3. **Configure a aplicação:**
-   - **App URL:** Escolha um nome único (ex: `dnd-character-creator`)
-   - **Python version:** 3.8 ou superior
-   - **Secrets:** Deixe vazio por enquanto
-
-4. **Deploy:**
-   - Clique em "Deploy!"
-   - Aguarde o processo de build (2-5 minutos)
-
-### 3. Verificação do Deploy
-
-1. **Acesse sua aplicação:**
-   - URL: `https://SEU_APP_NAME.streamlit.app`
-
-2. **Teste as funcionalidades:**
-   - ✅ Página inicial carrega
-   - ✅ Criação de personagem funciona
-   - ✅ Seleção de raça, classe e antecedente
-   - ✅ Sistema de habilidades
-   - ✅ Salvamento/carregamento
-   - ✅ Exportação PDF
-   - ✅ Modo escuro
-   - ✅ Multilinguagem
-
-## 🔧 Configurações Avançadas
-
-### 1. Variáveis de Ambiente
-
-Se precisar de configurações específicas, adicione no Streamlit Cloud:
-
-```toml
-# .streamlit/secrets.toml
-[general]
-app_name = "D&D 5e Character Creator"
-version = "1.0.0"
-
-[database]
-# Configurações de banco de dados (se necessário)
+jobs:
+  build-and-deploy:
+    runs-on: ubuntu-latest
+    
+    steps:
+    - name: Checkout
+      uses: actions/checkout@v4
+      
+    - name: Setup Node.js
+      uses: actions/setup-node@v4
+      with:
+        node-version: '18'
+        cache: 'npm'
+        
+    - name: Install dependencies
+      run: npm ci
+      
+    - name: Build
+      run: npm run build
+      
+    - name: Deploy to GitHub Pages
+      uses: peaceiris/actions-gh-pages@v3
+      if: github.ref == 'refs/heads/main'
+      with:
+        github_token: ${{ secrets.GITHUB_TOKEN }}
+        publish_dir: ./dist
 ```
 
-### 2. Domínio Personalizado
+## 🔄 Deploy Manual
 
-Para usar um domínio personalizado:
+Se preferir fazer o deploy manualmente:
 
-1. Configure o domínio no Streamlit Cloud
-2. Adicione o DNS necessário
-3. Atualize as configurações de CORS se necessário
+### 1. Instalar Dependências
 
-### 3. Monitoramento
+```bash
+npm install
+```
 
-- **Logs:** Acesse a aba "Logs" no Streamlit Cloud
-- **Métricas:** Monitore o uso de CPU e memória
-- **Erros:** Verifique os logs para problemas
+### 2. Build da Aplicação
+
+```bash
+npm run build
+```
+
+### 3. Deploy para GitHub Pages
+
+```bash
+npm run deploy:github
+```
+
+Este comando irá:
+- Construir a aplicação
+- Fazer push da pasta `dist` para a branch `gh-pages`
+- Ativar o GitHub Pages automaticamente
+
+## 🌐 Acessando a Aplicação
+
+Após o deploy, sua aplicação estará disponível em:
+
+```
+https://SEU-USUARIO.github.io/dnd-character-creator
+```
+
+## 🔧 Configurações Importantes
+
+### Base Path
+
+O arquivo `vite.config.ts` está configurado com o base path correto:
+
+```typescript
+export default defineConfig({
+  plugins: [react()],
+  base: '/dnd-character-creator/',
+  build: {
+    outDir: 'dist',
+    sourcemap: true
+  }
+})
+```
+
+### Arquivo .nojekyll
+
+O arquivo `.nojekyll` está incluído para garantir que o GitHub Pages não processe os arquivos com Jekyll.
 
 ## 🐛 Solução de Problemas
 
-### Problemas Comuns
+### Deploy não funciona
 
-1. **Erro de importação:**
-   - Verifique se todos os arquivos estão no repositório
-   - Confirme que o `streamlit_app.py` está na raiz
+1. Verifique se o GitHub Actions está ativado
+2. Confirme se a branch `gh-pages` foi criada
+3. Verifique os logs do GitHub Actions
 
-2. **Dependências não encontradas:**
-   - Verifique o `requirements.txt`
-   - Confirme as versões das dependências
+### Aplicação não carrega
 
-3. **Erro de permissão:**
-   - Verifique se o repositório é público
-   - Confirme as permissões do GitHub
+1. Verifique se o base path está correto no `vite.config.ts`
+2. Confirme se o arquivo `.nojekyll` está presente
+3. Verifique se a branch `gh-pages` contém os arquivos da pasta `dist`
 
-4. **Aplicação não carrega:**
-   - Verifique os logs no Streamlit Cloud
-   - Teste localmente primeiro
+### Erro de permissão
 
-### Logs de Debug
+1. Verifique se o token `GITHUB_TOKEN` tem as permissões necessárias
+2. Confirme se o repositório permite GitHub Actions
 
-Para debug, adicione no código:
+## 📝 Atualizações
 
-```python
-import streamlit as st
-import logging
+Para atualizar a aplicação:
 
-# Configurar logging
-logging.basicConfig(level=logging.DEBUG)
-logger = logging.getLogger(__name__)
+1. Faça as alterações no código
+2. Commit e push para a branch `main`:
 
-# Usar no código
-logger.debug("Debug message")
-st.write("Debug info")
+```bash
+git add .
+git commit -m "Atualização da aplicação"
+git push origin main
 ```
 
-## 📈 Otimizações
+3. O deploy automático será executado
+4. Aguarde alguns minutos e acesse a URL da aplicação
 
-### 1. Performance
+## 🎯 Dicas
 
-- **Cache de dados:** Use `@st.cache_data` para dados estáticos
-- **Lazy loading:** Carregue dados apenas quando necessário
-- **Otimização de imagens:** Comprima imagens se houver
+- Sempre teste localmente antes de fazer push
+- Use `npm run preview` para testar o build localmente
+- Monitore os logs do GitHub Actions para identificar problemas
+- Mantenha o repositório atualizado com as dependências
 
-### 2. Segurança
+---
 
-- **Validação de entrada:** Sempre valide dados do usuário
-- **Sanitização:** Limpe dados antes de processar
-- **Rate limiting:** Implemente se necessário
-
-### 3. Escalabilidade
-
-- **Banco de dados:** Use para muitos usuários
-- **CDN:** Para arquivos estáticos
-- **Load balancing:** Para alta demanda
-
-## 🔄 Atualizações
-
-### Deploy de Atualizações
-
-1. **Faça as alterações no código**
-2. **Commit e push para o GitHub:**
-   ```bash
-   git add .
-   git commit -m "Update: Nova funcionalidade"
-   git push origin main
-   ```
-3. **O Streamlit Cloud atualiza automaticamente**
-
-### Rollback
-
-Se algo der errado:
-
-1. **Reverta o commit:**
-   ```bash
-   git revert HEAD
-   git push origin main
-   ```
-2. **Ou volte para um commit anterior:**
-   ```bash
-   git reset --hard COMMIT_HASH
-   git push --force origin main
-   ```
-
-## 📞 Suporte
-
-- **Streamlit Cloud:** [docs.streamlit.io](https://docs.streamlit.io)
-- **GitHub Issues:** Use o sistema de issues do repositório
-- **Documentação:** Consulte o README.md
-
-## 🎉 Conclusão
-
-Sua aplicação D&D 5e Character Creator está pronta para uso! 
-
-**URL da aplicação:** `https://SEU_APP_NAME.streamlit.app`
-
-**Funcionalidades disponíveis:**
-- ✅ Criação de personagens D&D 5e
-- ✅ Interface responsiva com dark mode
-- ✅ Multilinguagem (PT/EN)
-- ✅ Salvamento/carregamento
-- ✅ Exportação PDF
-- ✅ Sistema de login
-- ✅ Deploy automático
-
-Divirta-se criando personagens! 🎲⚔️
+**Pronto! Sua aplicação D&D Character Creator estará online no GitHub Pages! 🎲⚔️**
