@@ -1,0 +1,205 @@
+{
+  "name": "Aragorn",
+  "level": 5,
+  "race": {
+    "name": "Human",
+    "description": "Humans are the most adaptable and ambitious people among the common races. Whatever drives them, humans are the innovators, the achievers, and the pioneers of the worlds.",
+    "ability_score_increases": {
+      "str": 1,
+      "dex": 1,
+      "con": 1,
+      "int": 1,
+      "wis": 1,
+      "cha": 1
+    },
+    "size": "Medium",
+    "speed": 30,
+    "languages": [
+      "Common"
+    ],
+    "features": [
+      {
+        "name": "Extra Language",
+        "description": "You can speak, read, and write one extra language of your choice.",
+        "ability_type": "racial"
+      }
+    ],
+    "subraces": []
+  },
+  "character_class": {
+    "name": "Fighter",
+    "hit_die": 10,
+    "primary_ability": "str",
+    "saving_throw_proficiencies": [
+      "str",
+      "con"
+    ],
+    "skill_proficiencies": [
+      "Acrobatics",
+      "Animal Handling",
+      "Athletics",
+      "History",
+      "Insight",
+      "Intimidation",
+      "Perception",
+      "Survival"
+    ],
+    "equipment": [
+      {
+        "name": "Chain Mail",
+        "item_type": "armor",
+        "description": "Heavy armor",
+        "weight": 55.0,
+        "value": "75 gp",
+        "properties": []
+      },
+      {
+        "name": "Shield",
+        "item_type": "armor",
+        "description": "A shield",
+        "weight": 6.0,
+        "value": "10 gp",
+        "properties": []
+      },
+      {
+        "name": "Longsword",
+        "item_type": "weapon",
+        "description": "A versatile melee weapon",
+        "weight": 3.0,
+        "value": "15 gp",
+        "properties": []
+      }
+    ],
+    "features": [
+      {
+        "name": "Fighting Style",
+        "description": "You adopt a particular style of fighting as your specialty. Choose one of the fighting styles.",
+        "ability_type": "class"
+      },
+      {
+        "name": "Second Wind",
+        "description": "You have a limited well of stamina that you can draw on to protect yourself from harm. On your turn, you can use a bonus action to regain hit points equal to 1d10 + your fighter level.",
+        "ability_type": "class"
+      }
+    ],
+    "spellcasting": false,
+    "spellcasting_ability": null,
+    "subclasses": [
+      "Champion",
+      "Battle Master",
+      "Eldritch Knight"
+    ]
+  },
+  "background": {
+    "name": "Soldier",
+    "description": "War has been your life for as long as you care to remember.",
+    "skill_proficiencies": [
+      "Athletics",
+      "Intimidation"
+    ],
+    "tool_proficiencies": [
+      "One type of gaming set",
+      "Vehicles (land)"
+    ],
+    "languages": [],
+    "equipment": [
+      {
+        "name": "Insignia of Rank",
+        "item_type": "equipment",
+        "description": "An insignia of rank",
+        "weight": 0.0,
+        "value": "0 gp",
+        "properties": []
+      },
+      {
+        "name": "Trophy",
+        "item_type": "equipment",
+        "description": "A trophy taken from a fallen enemy (a dagger, broken blade, or piece of a banner)",
+        "weight": 1.0,
+        "value": "10 gp",
+        "properties": []
+      },
+      {
+        "name": "Bone Dice",
+        "item_type": "tool",
+        "description": "A set of bone dice or deck of cards",
+        "weight": 0.0,
+        "value": "1 sp",
+        "properties": []
+      },
+      {
+        "name": "Common Clothes",
+        "item_type": "equipment",
+        "description": "Common clothes",
+        "weight": 3.0,
+        "value": "5 sp",
+        "properties": []
+      },
+      {
+        "name": "Belt Pouch",
+        "item_type": "equipment",
+        "description": "A belt pouch with 10 gp",
+        "weight": 1.0,
+        "value": "10 gp",
+        "properties": []
+      }
+    ],
+    "features": [
+      {
+        "name": "Military Rank",
+        "description": "You have a military rank from your career as a soldier.",
+        "ability_type": "background"
+      }
+    ],
+    "personality_traits": [
+      "I'm always polite and respectful.",
+      "I'm haunted by memories of war. I can't get the images of violence out of my mind.",
+      "I've lost too many friends, and I'm slow to make new ones.",
+      "I'm full of inspiring and cautionary tales from my military experience relevant to almost every combat situation.",
+      "I can stare down a hell hound without flinching.",
+      "I enjoy being strong and like breaking things.",
+      "I have a crude sense of humor.",
+      "I face problems head-on. A simple, direct solution is the best path to success."
+    ],
+    "ideals": [
+      "Greater Good. Our lot is to lay down our lives in defense of others. (Good)",
+      "Responsibility. I do what I must and obey just authority. (Lawful)",
+      "Independence. When people follow orders blindly, they embrace a kind of tyranny. (Chaotic)",
+      "Might. In life as in war, the stronger force wins. (Evil)",
+      "Live and Let Live. Ideals aren't worth killing over or going to war for. (Neutral)",
+      "Nation. My city, nation, or people are all that matter. (Any)"
+    ],
+    "bonds": [
+      "I would still lay down my life for the people I served with.",
+      "Someone saved my life on the battlefield. To this day, I will never leave a friend behind.",
+      "My honor is my life.",
+      "I'll never forget the crushing defeat my company suffered or the enemies who dealt it.",
+      "I'm fighting for someone who can't fight for themselves.",
+      "My nation or my order is the most important thing in my life, even when it is not perfect."
+    ],
+    "flaws": [
+      "The monstrous enemy we faced in battle still leaves me quivering with fear.",
+      "I have little respect for anyone who is not a proven warrior.",
+      "I made a terrible mistake in battle that cost many lives—and I would do anything to keep that mistake secret.",
+      "My hatred of my enemies is blind and unreasoning.",
+      "I obey the law, even if the law causes misery.",
+      "I'd rather eat my armor than admit when I'm wrong."
+    ]
+  },
+  "ability_scores": {
+    "str": 17,
+    "dex": 15,
+    "con": 16,
+    "int": 13,
+    "wis": 14,
+    "cha": 11
+  },
+  "hit_points": 49,
+  "armor_class": 12,
+  "speed": 30,
+  "equipment": [],
+  "abilities": [],
+  "notes": "",
+  "created_at": "2025-09-22T14:41:41.929809",
+  "updated_at": "2025-09-22T14:41:41.930028"
+}
