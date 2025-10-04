@@ -1,0 +1,296 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>D&D 5e Character Creator</title>
+    <link rel="stylesheet" href="styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700&family=Crimson+Text:ital,wght@0,400;0,600;1,400&display=swap" rel="stylesheet">
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>⚔️</text></svg>">
+    <link rel="manifest" href="manifest.json">
+    <meta name="theme-color" content="#8B4513">
+    <meta name="description" content="Criador de fichas de personagem para Dungeons & Dragons 5ª edição. Interface moderna e responsiva para criar e gerenciar seus personagens de RPG.">
+    <meta name="keywords" content="D&D, RPG, personagem, ficha, Dungeons Dragons, 5e, criador">
+    <meta name="author" content="D&D 5e Character Creator">
+</head>
+<body>
+    <div id="app">
+        <!-- Header -->
+        <header class="header">
+            <div class="container">
+                <h1 class="logo">🏰 D&D 5e Character Creator</h1>
+                <nav class="nav">
+                    <button class="nav-btn active" data-tab="home">🏠 Início</button>
+                    <button class="nav-btn" data-tab="creator">⚔️ Criar Personagem</button>
+                    <button class="nav-btn" data-tab="sheet">📋 Ficha</button>
+                </nav>
+                <div class="theme-toggle">
+                    <button id="theme-toggle" class="theme-btn">🌙</button>
+                </div>
+            </div>
+        </header>
+
+        <!-- Main Content -->
+        <main class="main">
+            <!-- Home Tab -->
+            <div id="home" class="tab-content active">
+                <div class="container">
+                    <div class="hero">
+                        <h2>Bem-vindo ao Sistema de Criação de Fichas de Personagem!</h2>
+                        <p>Crie e gerencie suas fichas de personagem para Dungeons & Dragons 5ª edição (2024)</p>
+                    </div>
+
+                    <div class="stats-grid">
+                        <div class="stat-card">
+                            <h3>9</h3>
+                            <p>Raças Disponíveis</p>
+                        </div>
+                        <div class="stat-card">
+                            <h3>12</h3>
+                            <p>Classes Disponíveis</p>
+                        </div>
+                        <div class="stat-card">
+                            <h3>6</h3>
+                            <p>Antecedentes</p>
+                        </div>
+                        <div class="stat-card">
+                            <h3>10+</h3>
+                            <p>Funcionalidades</p>
+                        </div>
+                    </div>
+
+                    <div class="features">
+                        <div class="feature-section">
+                            <h3>✨ Criação de Personagens</h3>
+                            <ul>
+                                <li>Seleção de raça, classe e antecedente</li>
+                                <li>Aplicação automática de regras e bônus</li>
+                                <li>Sistema de pontuação de habilidades flexível</li>
+                                <li>Equipamentos iniciais automáticos</li>
+                            </ul>
+                        </div>
+                        <div class="feature-section">
+                            <h3>📋 Gerenciamento de Fichas</h3>
+                            <ul>
+                                <li>Visualização completa da ficha</li>
+                                <li>Salvamento e carregamento em JSON</li>
+                                <li>Edição de personagens existentes</li>
+                                <li>Sistema de notas personalizadas</li>
+                            </ul>
+                        </div>
+                        <div class="feature-section">
+                            <h3>🎲 Sistema de Habilidades</h3>
+                            <ul>
+                                <li>Array padrão (15, 14, 13, 12, 10, 8)</li>
+                                <li>Compra por pontos (27 pontos)</li>
+                                <li>Rolagem de dados (4d6, descarte o menor)</li>
+                                <li>Cálculo automático de modificadores</li>
+                            </ul>
+                        </div>
+                        <div class="feature-section">
+                            <h3>📄 Exportação e Compartilhamento</h3>
+                            <ul>
+                                <li>Exportação para PDF</li>
+                                <li>Interface responsiva</li>
+                                <li>Modo escuro disponível</li>
+                                <li>Código aberto e extensível</li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <div class="cta">
+                        <button class="cta-btn" onclick="switchTab('creator')">
+                            🎯 Começar a Criar Personagem
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Character Creator Tab -->
+            <div id="creator" class="tab-content">
+                <div class="container">
+                    <h2>⚔️ Criador de Personagem D&D 5e</h2>
+                    
+                    <div class="creator-tabs">
+                        <button class="creator-tab-btn active" data-creator-tab="basic">📝 Informações Básicas</button>
+                        <button class="creator-tab-btn" data-creator-tab="abilities">🎲 Habilidades</button>
+                        <button class="creator-tab-btn" data-creator-tab="equipment">⚔️ Equipamentos</button>
+                        <button class="creator-tab-btn" data-creator-tab="abilities-special">✨ Habilidades Especiais</button>
+                        <button class="creator-tab-btn" data-creator-tab="save-load">💾 Salvar/Carregar</button>
+                    </div>
+
+                    <!-- Basic Info Tab -->
+                    <div id="basic" class="creator-tab-content active">
+                        <div class="form-grid">
+                            <div class="form-group">
+                                <label for="character-name">Nome do Personagem</label>
+                                <input type="text" id="character-name" placeholder="Ex: Aragorn">
+                            </div>
+                            <div class="form-group">
+                                <label for="character-level">Nível</label>
+                                <input type="number" id="character-level" min="1" max="20" value="1">
+                            </div>
+                            <div class="form-group">
+                                <label for="character-race">Raça</label>
+                                <select id="character-race">
+                                    <option value="">Selecione uma raça</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label for="character-class">Classe</label>
+                                <select id="character-class">
+                                    <option value="">Selecione uma classe</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label for="character-background">Antecedente</label>
+                                <select id="character-background">
+                                    <option value="">Selecione um antecedente</option>
+                                </select>
+                            </div>
+                        </div>
+                        
+                        <div class="race-info" id="race-info" style="display: none;">
+                            <h3>Informações da Raça</h3>
+                            <div id="race-details"></div>
+                        </div>
+                    </div>
+
+                    <!-- Abilities Tab -->
+                    <div id="abilities" class="creator-tab-content">
+                        <div class="ability-method">
+                            <h3>Método de Pontuação de Habilidades</h3>
+                            <div class="method-options">
+                                <label><input type="radio" name="ability-method" value="standard" checked> Array Padrão (15, 14, 13, 12, 10, 8)</label>
+                                <label><input type="radio" name="ability-method" value="point-buy"> Compra por Pontos (27 pontos)</label>
+                                <label><input type="radio" name="ability-method" value="roll"> Rolagem de Dados (4d6, descarte o menor)</label>
+                            </div>
+                        </div>
+                        
+                        <div class="abilities-grid" id="abilities-grid">
+                            <!-- Abilities will be populated by JavaScript -->
+                        </div>
+                    </div>
+
+                    <!-- Equipment Tab -->
+                    <div id="equipment" class="creator-tab-content">
+                        <h3>Equipamentos Iniciais</h3>
+                        <div id="starting-equipment"></div>
+                        
+                        <h3>Equipamentos Adicionais</h3>
+                        <div class="add-equipment">
+                            <input type="text" id="equipment-name" placeholder="Nome do equipamento">
+                            <input type="text" id="equipment-description" placeholder="Descrição">
+                            <button onclick="addCustomEquipment()">Adicionar</button>
+                        </div>
+                        <div id="custom-equipment"></div>
+                    </div>
+
+                    <!-- Special Abilities Tab -->
+                    <div id="abilities-special" class="creator-tab-content">
+                        <h3>Habilidades Especiais</h3>
+                        <div id="racial-abilities"></div>
+                        <div id="class-abilities"></div>
+                        
+                        <h3>Habilidades Adicionais</h3>
+                        <div class="add-ability">
+                            <input type="text" id="ability-name" placeholder="Nome da habilidade">
+                            <textarea id="ability-description" placeholder="Descrição da habilidade"></textarea>
+                            <button onclick="addCustomAbility()">Adicionar</button>
+                        </div>
+                        <div id="custom-abilities"></div>
+                    </div>
+
+                    <!-- Save/Load Tab -->
+                    <div id="save-load" class="creator-tab-content">
+                        <div class="save-load-section">
+                            <h3>Salvar Personagem</h3>
+                            <button onclick="saveCharacter()" class="save-btn">💾 Salvar Personagem</button>
+                        </div>
+                        
+                        <div class="save-load-section">
+                            <h3>Carregar Personagem</h3>
+                            <input type="file" id="load-file" accept=".json" onchange="loadCharacter(event)">
+                            <button onclick="document.getElementById('load-file').click()" class="load-btn">📁 Carregar Personagem</button>
+                        </div>
+                        
+                        <div class="save-load-section">
+                            <h3>Personagens Salvos</h3>
+                            <div id="saved-characters"></div>
+                        </div>
+                    </div>
+
+                    <div class="creator-actions">
+                        <button onclick="createCharacter()" class="create-btn">✨ Criar Personagem</button>
+                        <button onclick="switchTab('sheet')" class="view-btn">👁️ Ver Ficha</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Character Sheet Tab -->
+            <div id="sheet" class="tab-content">
+                <div class="container">
+                    <div id="no-character" class="no-character">
+                        <h2>📋 Ficha de Personagem</h2>
+                        <p>Nenhum personagem carregado. Vá para a aba 'Criar Personagem' para criar um novo personagem.</p>
+                    </div>
+                    
+                    <div id="character-sheet" class="character-sheet" style="display: none;">
+                        <div class="sheet-header">
+                            <h2 id="sheet-name">Nome do Personagem</h2>
+                            <div class="sheet-actions">
+                                <button onclick="exportToPDF()" class="export-btn">📄 Exportar PDF</button>
+                                <button onclick="printSheet()" class="print-btn">🖨️ Imprimir</button>
+                            </div>
+                        </div>
+                        
+                        <div class="sheet-content">
+                            <div class="sheet-section basic-info">
+                                <h3>Informações Básicas</h3>
+                                <div class="info-grid">
+                                    <div><strong>Nome:</strong> <span id="sheet-character-name">-</span></div>
+                                    <div><strong>Nível:</strong> <span id="sheet-level">-</span></div>
+                                    <div><strong>Raça:</strong> <span id="sheet-race">-</span></div>
+                                    <div><strong>Classe:</strong> <span id="sheet-class">-</span></div>
+                                    <div><strong>Antecedente:</strong> <span id="sheet-background">-</span></div>
+                                </div>
+                            </div>
+                            
+                            <div class="sheet-section abilities">
+                                <h3>Habilidades</h3>
+                                <div class="abilities-display" id="abilities-display">
+                                    <!-- Abilities will be populated by JavaScript -->
+                                </div>
+                            </div>
+                            
+                            <div class="sheet-section equipment">
+                                <h3>Equipamentos</h3>
+                                <div id="equipment-display">
+                                    <!-- Equipment will be populated by JavaScript -->
+                                </div>
+                            </div>
+                            
+                            <div class="sheet-section abilities-special">
+                                <h3>Habilidades Especiais</h3>
+                                <div id="special-abilities-display">
+                                    <!-- Special abilities will be populated by JavaScript -->
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </main>
+
+        <!-- Footer -->
+        <footer class="footer">
+            <div class="container">
+                <p>&copy; 2024 D&D 5e Character Creator. Desenvolvido com ❤️ para a comunidade RPG.</p>
+            </div>
+        </footer>
+    </div>
+
+    <script src="data.js"></script>
+    <script src="app.js"></script>
+</body>
+</html>
